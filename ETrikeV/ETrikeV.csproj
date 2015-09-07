@@ -49,5 +49,7 @@
     <Compile Include="DataPhaseInfo.cs" />
     <Compile Include="OperationResponse.cs" />
     <Compile Include="ResponseCode.cs" />
+    <Compile Include="CmdDataConnection.cs" />
+    <Compile Include="EventConnection.cs" />
   </ItemGroup>
 </Project>

@@ -12,7 +12,7 @@ namespace ETrikeV
         private const string THETA_ADDR = "192.168.1.1";
         private const int THETA_PORT = 15740;
         private static UInt32 sessionID = 1;
-        private static UInt32 transactionID = 3;
+        private static UInt32 transactionID = 1;
 
         static void Main(string[] args)
         {

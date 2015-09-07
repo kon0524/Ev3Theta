@@ -18,33 +18,26 @@ namespace ETrikeV
 
         static void Main(string[] args)
         {
+			// ThetaとWifi接続する
 			EV3WiFiDevice wifi = new EV3WiFiDevice ();
 			if (!wifi.IsLinkUp ()) {
+				// SSIDとパスワードは適宜変更してください
 				wifi.TurnOn ("THETAXN00000010", "00000010", true);
 			}
 
+			//---------- ▼ PTPIPの接続開始ここから ▼ ----------
             // Command/Data Connection
 			CmdDataConnection cmdDataCon = new CmdDataConnection(THETA_ADDR, THETA_PORT);
 
             // Event Connection
 			EventConnection evtCon = new EventConnection(THETA_ADDR, THETA_PORT, cmdDataCon.ConnectionNumber);
+			//---------- ▲ PTPIPの接続開始ここまで ▲ ----------
 
-			// OpenSession
-			OperationResponse res = cmdDataCon.operationRequest(
-				DataPhaseInfo.NoDataOrDataInPhase, OperationCode.OpenSession, transactionID, sessionID);
-			if (res.ResponseCode != ResponseCode.OK) {
-				return;
-			}
+			// ここでThetaのAPIを実行すれば動作する（はず）
 
-            // InitiateCapture
-            transactionID++;
-			res = cmdDataCon.operationRequest (
-				DataPhaseInfo.NoDataOrDataInPhase, OperationCode.InitiateCapture, transactionID, 0, 0);
-			if (res.ResponseCode != ResponseCode.OK) {
-				return;
-			}
 
-			// Close
+
+			// PTPIPの接続を終了する
 			cmdDataCon.close();
 			evtCon.close ();
         }

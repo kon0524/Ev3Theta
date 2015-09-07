@@ -16,7 +16,11 @@ namespace ETrikeV
 
         static void Main(string[] args)
         {
-			LcdConsole.Clear ();
+			EV3WiFiDevice wifi = new EV3WiFiDevice ();
+//			// WiFi ON
+//			bool f = wifi.IsLinkUp();
+//
+			wifi.TurnOn ("THETAXN00000010", "00000010", true);
 
             // Command/Data Connection
 			CmdDataConnection cmdDataCon = new CmdDataConnection(THETA_ADDR, THETA_PORT);
@@ -28,22 +32,24 @@ namespace ETrikeV
 			OperationResponse res = cmdDataCon.operationRequest(
 				DataPhaseInfo.NoDataOrDataInPhase, OperationCode.OpenSession, transactionID, sessionID);
 			if (res.ResponseCode != ResponseCode.OK) {
-				LcdConsole.WriteLine("OpenSession Failed. [" + res.ResponseCode + "]");
+				//LcdConsole.WriteLine("OpenSession Failed. [" + res.ResponseCode + "]");
+				return;
 			}
 
             // InitiateCapture
             transactionID++;
 			res = cmdDataCon.operationRequest (
-				DataPhaseInfo.NoDataOrDataInPhase, OperationCode.InitiateCapture, transactionID, sessionID, 0, 0);
+				DataPhaseInfo.NoDataOrDataInPhase, OperationCode.InitiateCapture, transactionID, 0, 0);
 			if (res.ResponseCode != ResponseCode.OK) {
-				LcdConsole.WriteLine ("InitiateCapture Failed. [" + res.ResponseCode + "]");
+				//LcdConsole.WriteLine ("InitiateCapture Failed. [" + res.ResponseCode + "]");
+				return;
 			}
 
 			// Close
 			cmdDataCon.close();
 			evtCon.close ();
 
-			LcdConsole.WriteLine ("Disconnected.");
+			//LcdConsole.WriteLine ("Disconnected.");
         }
     }
 }
